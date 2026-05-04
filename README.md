@@ -8,15 +8,6 @@ A simple full-stack Kanban-style task manager built with:
 
 ---
 
-## 🚀 Features
-
-* ✅ Create tasks
-* 📋 View tasks (To Do / Done)
-* 🔄 Move tasks between columns
-* 🗑️ Delete tasks
-* ⚡ Real-time UI updates
-
----
 
 ## 📁 Project Structure
 
