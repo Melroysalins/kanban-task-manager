@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
+const BASE_URL = "https://kanban-task-manager-ntwz.onrender.com";
+
 export const useAddTasks = () => {
   const [tasks, setTasks] = useState([]);
 
@@ -8,7 +10,7 @@ export const useAddTasks = () => {
 
   const fecthAllTasks = async () => {
     try {
-      const response = await fetch("http://localhost:4000/tasks");
+      const response = await fetch(`${BASE_URL}/tasks`);
 
       const result = await response.json();
 
@@ -32,7 +34,7 @@ export const useAddTasks = () => {
         status: "todo",
       };
 
-      const response = await fetch("http://localhost:4000/tasks", {
+      const response = await fetch(`${BASE_URL}/tasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +54,7 @@ export const useAddTasks = () => {
 
   const handleDeleteTask = async (task) => {
     try {
-      const response = await fetch(`http://localhost:4000/tasks/${task?.id}`, {
+      const response = await fetch(`${BASE_URL}/tasks/${task?.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +63,7 @@ export const useAddTasks = () => {
 
       const result = await response.json();
 
-      if (response.ok) fecthAllTasks();
+      if (response.ok) setTasks((prev) => prev.filter((t) => t.id !== task.id));
     } catch (error) {
       console.error("Error : Failed to delete  task", error);
     }
@@ -70,7 +72,7 @@ export const useAddTasks = () => {
   const handleTaskStatus = async (task) => {
     try {
       const updatedStatus = task.status === "todo" ? "done" : "todo";
-      const response = await fetch(`http://localhost:4000/tasks/${task?.id}`, {
+      const response = await fetch(`${BASE_URL}/tasks/${task?.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +82,14 @@ export const useAddTasks = () => {
 
       const result = await response.json();
 
-      if (response.ok) fecthAllTasks();
+      if (response.ok)
+        setTasks((prev) =>
+          prev.map((t) =>
+            t.id === task.id
+              ? { ...t, status: t.status === "todo" ? "done" : "todo" }
+              : t,
+          ),
+        );
     } catch (error) {
       console.error("Error : Failed to update task status", error);
     }
