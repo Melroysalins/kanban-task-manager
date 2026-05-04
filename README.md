@@ -100,15 +100,3 @@ http://localhost:5173
 
 ---
 
-## 📌 Future Improvements
-
-* 🔄 Drag & Drop support
-* ⏳ Loading states
-* 🔔 Toast notifications
-* 🗂️ Persistent database (MongoDB)
-
----
-
-## 👨‍💻 Author
-
-**Melroy Salins**
